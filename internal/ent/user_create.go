@@ -6,6 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"gonebook/internal/ent/contact"
 	"gonebook/internal/ent/token"
 	"gonebook/internal/ent/user"
 
@@ -30,6 +31,21 @@ func (uc *UserCreate) SetUsername(s string) *UserCreate {
 func (uc *UserCreate) SetPassword(s string) *UserCreate {
 	uc.mutation.SetPassword(s)
 	return uc
+}
+
+// AddContactIDs adds the contacts edge to Contact by ids.
+func (uc *UserCreate) AddContactIDs(ids ...int) *UserCreate {
+	uc.mutation.AddContactIDs(ids...)
+	return uc
+}
+
+// AddContacts adds the contacts edges to Contact.
+func (uc *UserCreate) AddContacts(c ...*Contact) *UserCreate {
+	ids := make([]int, len(c))
+	for i := range c {
+		ids[i] = c[i].ID
+	}
+	return uc.AddContactIDs(ids...)
 }
 
 // AddTokenIDs adds the token edge to Token by ids.
@@ -156,6 +172,25 @@ func (uc *UserCreate) createSpec() (*User, *sqlgraph.CreateSpec) {
 			Column: user.FieldPassword,
 		})
 		_node.Password = value
+	}
+	if nodes := uc.mutation.ContactsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   user.ContactsTable,
+			Columns: []string{user.ContactsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: contact.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	if nodes := uc.mutation.TokenIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

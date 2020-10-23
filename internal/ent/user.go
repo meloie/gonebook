@@ -26,17 +26,28 @@ type User struct {
 
 // UserEdges holds the relations/edges for other nodes in the graph.
 type UserEdges struct {
+	// Contacts holds the value of the contacts edge.
+	Contacts []*Contact
 	// Token holds the value of the token edge.
 	Token []*Token
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [1]bool
+	loadedTypes [2]bool
+}
+
+// ContactsOrErr returns the Contacts value or an error if the edge
+// was not loaded in eager-loading.
+func (e UserEdges) ContactsOrErr() ([]*Contact, error) {
+	if e.loadedTypes[0] {
+		return e.Contacts, nil
+	}
+	return nil, &NotLoadedError{edge: "contacts"}
 }
 
 // TokenOrErr returns the Token value or an error if the edge
 // was not loaded in eager-loading.
 func (e UserEdges) TokenOrErr() ([]*Token, error) {
-	if e.loadedTypes[0] {
+	if e.loadedTypes[1] {
 		return e.Token, nil
 	}
 	return nil, &NotLoadedError{edge: "token"}
@@ -74,6 +85,11 @@ func (u *User) assignValues(values ...interface{}) error {
 		u.Password = value.String
 	}
 	return nil
+}
+
+// QueryContacts queries the contacts edge of the User.
+func (u *User) QueryContacts() *ContactQuery {
+	return (&UserClient{config: u.config}).QueryContacts(u)
 }
 
 // QueryToken queries the token edge of the User.

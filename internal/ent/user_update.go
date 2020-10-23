@@ -5,6 +5,7 @@ package ent
 import (
 	"context"
 	"fmt"
+	"gonebook/internal/ent/contact"
 	"gonebook/internal/ent/predicate"
 	"gonebook/internal/ent/token"
 	"gonebook/internal/ent/user"
@@ -40,6 +41,21 @@ func (uu *UserUpdate) SetPassword(s string) *UserUpdate {
 	return uu
 }
 
+// AddContactIDs adds the contacts edge to Contact by ids.
+func (uu *UserUpdate) AddContactIDs(ids ...int) *UserUpdate {
+	uu.mutation.AddContactIDs(ids...)
+	return uu
+}
+
+// AddContacts adds the contacts edges to Contact.
+func (uu *UserUpdate) AddContacts(c ...*Contact) *UserUpdate {
+	ids := make([]int, len(c))
+	for i := range c {
+		ids[i] = c[i].ID
+	}
+	return uu.AddContactIDs(ids...)
+}
+
 // AddTokenIDs adds the token edge to Token by ids.
 func (uu *UserUpdate) AddTokenIDs(ids ...int) *UserUpdate {
 	uu.mutation.AddTokenIDs(ids...)
@@ -58,6 +74,27 @@ func (uu *UserUpdate) AddToken(t ...*Token) *UserUpdate {
 // Mutation returns the UserMutation object of the builder.
 func (uu *UserUpdate) Mutation() *UserMutation {
 	return uu.mutation
+}
+
+// ClearContacts clears all "contacts" edges to type Contact.
+func (uu *UserUpdate) ClearContacts() *UserUpdate {
+	uu.mutation.ClearContacts()
+	return uu
+}
+
+// RemoveContactIDs removes the contacts edge to Contact by ids.
+func (uu *UserUpdate) RemoveContactIDs(ids ...int) *UserUpdate {
+	uu.mutation.RemoveContactIDs(ids...)
+	return uu
+}
+
+// RemoveContacts removes contacts edges to Contact.
+func (uu *UserUpdate) RemoveContacts(c ...*Contact) *UserUpdate {
+	ids := make([]int, len(c))
+	for i := range c {
+		ids[i] = c[i].ID
+	}
+	return uu.RemoveContactIDs(ids...)
 }
 
 // ClearToken clears all "token" edges to type Token.
@@ -185,6 +222,60 @@ func (uu *UserUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: user.FieldPassword,
 		})
 	}
+	if uu.mutation.ContactsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   user.ContactsTable,
+			Columns: []string{user.ContactsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: contact.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := uu.mutation.RemovedContactsIDs(); len(nodes) > 0 && !uu.mutation.ContactsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   user.ContactsTable,
+			Columns: []string{user.ContactsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: contact.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := uu.mutation.ContactsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   user.ContactsTable,
+			Columns: []string{user.ContactsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: contact.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if uu.mutation.TokenCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
@@ -269,6 +360,21 @@ func (uuo *UserUpdateOne) SetPassword(s string) *UserUpdateOne {
 	return uuo
 }
 
+// AddContactIDs adds the contacts edge to Contact by ids.
+func (uuo *UserUpdateOne) AddContactIDs(ids ...int) *UserUpdateOne {
+	uuo.mutation.AddContactIDs(ids...)
+	return uuo
+}
+
+// AddContacts adds the contacts edges to Contact.
+func (uuo *UserUpdateOne) AddContacts(c ...*Contact) *UserUpdateOne {
+	ids := make([]int, len(c))
+	for i := range c {
+		ids[i] = c[i].ID
+	}
+	return uuo.AddContactIDs(ids...)
+}
+
 // AddTokenIDs adds the token edge to Token by ids.
 func (uuo *UserUpdateOne) AddTokenIDs(ids ...int) *UserUpdateOne {
 	uuo.mutation.AddTokenIDs(ids...)
@@ -287,6 +393,27 @@ func (uuo *UserUpdateOne) AddToken(t ...*Token) *UserUpdateOne {
 // Mutation returns the UserMutation object of the builder.
 func (uuo *UserUpdateOne) Mutation() *UserMutation {
 	return uuo.mutation
+}
+
+// ClearContacts clears all "contacts" edges to type Contact.
+func (uuo *UserUpdateOne) ClearContacts() *UserUpdateOne {
+	uuo.mutation.ClearContacts()
+	return uuo
+}
+
+// RemoveContactIDs removes the contacts edge to Contact by ids.
+func (uuo *UserUpdateOne) RemoveContactIDs(ids ...int) *UserUpdateOne {
+	uuo.mutation.RemoveContactIDs(ids...)
+	return uuo
+}
+
+// RemoveContacts removes contacts edges to Contact.
+func (uuo *UserUpdateOne) RemoveContacts(c ...*Contact) *UserUpdateOne {
+	ids := make([]int, len(c))
+	for i := range c {
+		ids[i] = c[i].ID
+	}
+	return uuo.RemoveContactIDs(ids...)
 }
 
 // ClearToken clears all "token" edges to type Token.
@@ -411,6 +538,60 @@ func (uuo *UserUpdateOne) sqlSave(ctx context.Context) (_node *User, err error) 
 			Value:  value,
 			Column: user.FieldPassword,
 		})
+	}
+	if uuo.mutation.ContactsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   user.ContactsTable,
+			Columns: []string{user.ContactsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: contact.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := uuo.mutation.RemovedContactsIDs(); len(nodes) > 0 && !uuo.mutation.ContactsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   user.ContactsTable,
+			Columns: []string{user.ContactsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: contact.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := uuo.mutation.ContactsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: true,
+			Table:   user.ContactsTable,
+			Columns: []string{user.ContactsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: contact.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	if uuo.mutation.TokenCleared() {
 		edge := &sqlgraph.EdgeSpec{

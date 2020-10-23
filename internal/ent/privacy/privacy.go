@@ -209,6 +209,30 @@ func DenyMutationOperationRule(op ent.Op) MutationRule {
 	return OnMutationOperation(rule, op)
 }
 
+// The ContactQueryRuleFunc type is an adapter to allow the use of ordinary
+// functions as a query rule.
+type ContactQueryRuleFunc func(context.Context, *ent.ContactQuery) error
+
+// EvalQuery return f(ctx, q).
+func (f ContactQueryRuleFunc) EvalQuery(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.ContactQuery); ok {
+		return f(ctx, q)
+	}
+	return Denyf("ent/privacy: unexpected query type %T, expect *ent.ContactQuery", q)
+}
+
+// The ContactMutationRuleFunc type is an adapter to allow the use of ordinary
+// functions as a mutation rule.
+type ContactMutationRuleFunc func(context.Context, *ent.ContactMutation) error
+
+// EvalMutation calls f(ctx, m).
+func (f ContactMutationRuleFunc) EvalMutation(ctx context.Context, m ent.Mutation) error {
+	if m, ok := m.(*ent.ContactMutation); ok {
+		return f(ctx, m)
+	}
+	return Denyf("ent/privacy: unexpected mutation type %T, expect *ent.ContactMutation", m)
+}
+
 // The TokenQueryRuleFunc type is an adapter to allow the use of ordinary
 // functions as a query rule.
 type TokenQueryRuleFunc func(context.Context, *ent.TokenQuery) error

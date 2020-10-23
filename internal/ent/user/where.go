@@ -328,6 +328,34 @@ func PasswordContainsFold(v string) predicate.User {
 	})
 }
 
+// HasContacts applies the HasEdge predicate on the "contacts" edge.
+func HasContacts() predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(ContactsTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, true, ContactsTable, ContactsColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasContactsWith applies the HasEdge predicate on the "contacts" edge with a given conditions (other predicates).
+func HasContactsWith(preds ...predicate.Contact) predicate.User {
+	return predicate.User(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(ContactsInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, true, ContactsTable, ContactsColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
 // HasToken applies the HasEdge predicate on the "token" edge.
 func HasToken() predicate.User {
 	return predicate.User(func(s *sql.Selector) {
