@@ -34,7 +34,7 @@ func (svc *Service) GetUserIDByToken(ctx context.Context, tokenValue string) (in
 	return id, nil
 }
 
-func (svc *Service) CurrentUser(ctx context.Context, r http.Request) (int, error) {
+func (svc *Service) CurrentUser(ctx context.Context, r *http.Request) (int, error) {
 	tokenHeader := r.Header.Get("Authorization")
 	if tokenHeader == "" {
 		return 0, UnAuthorizedErr

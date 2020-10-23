@@ -20,12 +20,6 @@ func (srv *WebServer) RegisterUser(w http.ResponseWriter, r *http.Request) {
 	var data models.User
 	err := render.Bind(r, &data)
 	if err != nil {
-		log.Error().Err(err).Msg("failed to decode request body")
-		render.Render(w, r, models.ErrInvalidRequest(err))
-		return
-	}
-	err = validation.IsRegistrationInfoValid(data)
-	if err != nil {
 		render.Render(w, r, models.ErrInvalidRequest(err))
 		return
 	}

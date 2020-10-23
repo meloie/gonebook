@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"gonebook/internal/ent"
 	"net/http"
 )
@@ -13,6 +14,12 @@ type User struct {
 // Bind on UserPayload will run after the unmarshalling is complete, its
 // a good time to focus some post-processing after a decoding.
 func (u *User) Bind(r *http.Request) error {
+	if u.Username == "" {
+		return errors.New("username can't be empty")
+	}
+	if u.Password == "" {
+		return errors.New("password can't be empty")
+	}
 	return nil
 }
 

@@ -37,6 +37,8 @@ func main() {
 	})
 	r.Post("/register", webserver.RegisterUser)
 	r.Post("/login", webserver.Login)
+	r.Get("/contacts", webserver.ContactsList)
+	r.Post("/contacts", webserver.CreateContact)
 
 	http.ListenAndServe(":3000", r)
 }
