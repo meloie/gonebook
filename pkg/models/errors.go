@@ -42,3 +42,21 @@ func ErrUnathorized(err error) render.Renderer {
 		ErrorText:      err.Error(),
 	}
 }
+
+func ErrNotFound(err error) render.Renderer {
+	return &ErrResponse{
+		Err:            err,
+		HTTPStatusCode: 404,
+		StatusText:     "Not Found",
+		ErrorText:      err.Error(),
+	}
+}
+
+func ErrAccessDenied(err error) render.Renderer {
+	return &ErrResponse{
+		Err:            err,
+		HTTPStatusCode: 403,
+		StatusText:     "Persmission Denied",
+		ErrorText:      err.Error(),
+	}
+}

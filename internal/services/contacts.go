@@ -28,3 +28,18 @@ func (svc *Service) CreateContact(ctx context.Context, data *models.ContactPaylo
 	return cnt, err
 
 }
+
+func (svc *Service) GetContact(ctx context.Context, contactID int) (*ent.Contact, error) {
+	cnt, err := svc.Database.Contact.Query().Where(contact.IDEQ(contactID)).WithOwner().Only(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return cnt, nil
+}
+
+func (svc *Service) UpdateContact(
+	ctx context.Context, contct *ent.Contact, data models.ContactPayload) (*ent.Contact, error) {
+	cnt, err := contct.Update().SetAddress(data.Address).
+		SetName(data.Name).SetPhone(data.Phone).Save(ctx)
+	return cnt, err
+}
