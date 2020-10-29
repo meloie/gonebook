@@ -18,7 +18,7 @@ type ContactPayload struct {
 
 func (c *ContactPayload) Bind(r *http.Request) error {
 	if c.Address == "" && c.Phone == "" && c.Name == "" {
-		return errors.New("can't create a contect with all empty fields")
+		return errors.New("can't create a contact with all empty fields")
 	}
 	if c.Phone != "" {
 		isPhone := validation.ValidatePhoneNumber(c.Phone)
