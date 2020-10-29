@@ -44,6 +44,7 @@ func main() {
 		r.Post("/", webserver.CreateContact)
 		r.Get("/{contactId}", webserver.ContactDetails)
 		r.Put("/{contactId}", webserver.UpdateContact)
+		r.Delete("/{contactId}", webserver.DeleteContact)
 	})
 
 	http.ListenAndServe(":3000", r)

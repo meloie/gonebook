@@ -43,3 +43,7 @@ func (svc *Service) UpdateContact(
 		SetName(data.Name).SetPhone(data.Phone).Save(ctx)
 	return cnt, err
 }
+
+func (svc *Service) DeleteContact(ctx context.Context, cnc *ent.Contact) error {
+	return svc.Database.Contact.DeleteOne(cnc).Exec(ctx)
+}
