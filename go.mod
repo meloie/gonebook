@@ -1,4 +1,4 @@
-module gonebook
+module github.com/meloie/gonebook
 
 go 1.12
 

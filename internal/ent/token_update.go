@@ -6,9 +6,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"gonebook/internal/ent/predicate"
-	"gonebook/internal/ent/token"
-	"gonebook/internal/ent/user"
+	"github.com/meloie/gonebook/internal/ent/predicate"
+	"github.com/meloie/gonebook/internal/ent/token"
+	"github.com/meloie/gonebook/internal/ent/user"
 
 	"github.com/facebook/ent/dialect/sql"
 	"github.com/facebook/ent/dialect/sql/sqlgraph"

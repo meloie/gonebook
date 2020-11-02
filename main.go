@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"gonebook/app/webserver"
+	"github.com/meloie/gonebook/app/webserver"
 	"net/http"
 
 	"github.com/go-chi/chi"
@@ -11,8 +11,8 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/rs/zerolog/log"
 
-	"gonebook/internal/ent"
-	"gonebook/internal/services"
+	"github.com/meloie/gonebook/internal/ent"
+	"github.com/meloie/gonebook/internal/services"
 )
 
 func main() {

@@ -2,8 +2,8 @@ package webserver
 
 import (
 	"errors"
-	"gonebook/internal/ent"
-	"gonebook/pkg/models"
+	"github.com/meloie/gonebook/internal/ent"
+	"github.com/meloie/gonebook/pkg/models"
 	"net/http"
 	"strconv"
 

@@ -5,9 +5,9 @@ package ent
 import (
 	"context"
 	"fmt"
-	"gonebook/internal/ent/contact"
-	"gonebook/internal/ent/token"
-	"gonebook/internal/ent/user"
+	"github.com/meloie/gonebook/internal/ent/contact"
+	"github.com/meloie/gonebook/internal/ent/token"
+	"github.com/meloie/gonebook/internal/ent/user"
 	"sync"
 
 	"github.com/facebook/ent"

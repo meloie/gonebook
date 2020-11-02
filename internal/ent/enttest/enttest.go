@@ -4,9 +4,9 @@ package enttest
 
 import (
 	"context"
-	"gonebook/internal/ent"
+	"github.com/meloie/gonebook/internal/ent"
 	// required by schema hooks.
-	_ "gonebook/internal/ent/runtime"
+	_ "github.com/meloie/gonebook/internal/ent/runtime"
 
 	"github.com/facebook/ent/dialect/sql/schema"
 )

@@ -2,10 +2,10 @@ package services
 
 import (
 	"context"
-	"gonebook/internal/ent"
-	"gonebook/internal/ent/contact"
-	"gonebook/internal/ent/user"
-	"gonebook/pkg/models"
+	"github.com/meloie/gonebook/internal/ent"
+	"github.com/meloie/gonebook/internal/ent/contact"
+	"github.com/meloie/gonebook/internal/ent/user"
+	"github.com/meloie/gonebook/pkg/models"
 
 	"github.com/pkg/errors"
 )

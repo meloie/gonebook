@@ -1,7 +1,7 @@
 package webserver
 
 import (
-	"gonebook/internal/services"
+	"github.com/meloie/gonebook/internal/services"
 )
 
 type WebServer struct {

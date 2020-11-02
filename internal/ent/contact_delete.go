@@ -5,8 +5,8 @@ package ent
 import (
 	"context"
 	"fmt"
-	"gonebook/internal/ent/contact"
-	"gonebook/internal/ent/predicate"
+	"github.com/meloie/gonebook/internal/ent/contact"
+	"github.com/meloie/gonebook/internal/ent/predicate"
 
 	"github.com/facebook/ent/dialect/sql"
 	"github.com/facebook/ent/dialect/sql/sqlgraph"

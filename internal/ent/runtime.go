@@ -3,9 +3,9 @@
 package ent
 
 import (
-	"gonebook/internal/ent/schema"
-	"gonebook/internal/ent/token"
-	"gonebook/internal/ent/user"
+	"github.com/meloie/gonebook/internal/ent/schema"
+	"github.com/meloie/gonebook/internal/ent/token"
+	"github.com/meloie/gonebook/internal/ent/user"
 )
 
 // The init function reads all schema descriptors with runtime

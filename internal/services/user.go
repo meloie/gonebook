@@ -6,9 +6,9 @@ import (
 	"github.com/pkg/errors"
 	"golang.org/x/crypto/bcrypt"
 
-	"gonebook/internal/ent"
-	"gonebook/internal/ent/user"
-	"gonebook/pkg/models"
+	"github.com/meloie/gonebook/internal/ent"
+	"github.com/meloie/gonebook/internal/ent/user"
+	"github.com/meloie/gonebook/pkg/models"
 )
 
 // CreateUser bcyrpt password and save it in databas

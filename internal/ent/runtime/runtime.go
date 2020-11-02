@@ -2,7 +2,7 @@
 
 package runtime
 
-// The schema-stitching logic is generated in gonebook/internal/ent/runtime.go
+// The schema-stitching logic is generated in github.com/meloie/gonebook/internal/ent/runtime.go
 
 const (
 	Version = "v0.4.3"                                          // Version of ent codegen.

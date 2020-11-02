@@ -6,8 +6,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"gonebook/internal/ent/contact"
-	"gonebook/internal/ent/user"
+	"github.com/meloie/gonebook/internal/ent/contact"
+	"github.com/meloie/gonebook/internal/ent/user"
 
 	"github.com/facebook/ent/dialect/sql/sqlgraph"
 	"github.com/facebook/ent/schema/field"

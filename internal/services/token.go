@@ -3,9 +3,9 @@ package services
 import (
 	"context"
 	"errors"
-	"gonebook/internal/ent"
-	"gonebook/internal/ent/token"
-	"gonebook/pkg/utils"
+	"github.com/meloie/gonebook/internal/ent"
+	"github.com/meloie/gonebook/internal/ent/token"
+	"github.com/meloie/gonebook/pkg/utils"
 	"net/http"
 	"strings"
 )

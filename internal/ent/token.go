@@ -4,8 +4,8 @@ package ent
 
 import (
 	"fmt"
-	"gonebook/internal/ent/token"
-	"gonebook/internal/ent/user"
+	"github.com/meloie/gonebook/internal/ent/token"
+	"github.com/meloie/gonebook/internal/ent/user"
 	"strings"
 
 	"github.com/facebook/ent/dialect/sql"

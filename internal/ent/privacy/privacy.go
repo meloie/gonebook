@@ -6,7 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"gonebook/internal/ent"
+	"github.com/meloie/gonebook/internal/ent"
 )
 
 var (

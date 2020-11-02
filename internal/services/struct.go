@@ -1,6 +1,6 @@
 package services
 
-import "gonebook/internal/ent"
+import "github.com/meloie/gonebook/internal/ent"
 
 type Service struct {
 	Database *ent.Client

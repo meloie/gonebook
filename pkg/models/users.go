@@ -2,7 +2,7 @@ package models
 
 import (
 	"errors"
-	"gonebook/internal/ent"
+	"github.com/meloie/gonebook/internal/ent"
 	"net/http"
 )
 

@@ -3,8 +3,8 @@ package webserver
 import (
 	"errors"
 	"fmt"
-	"gonebook/internal/validation"
-	"gonebook/pkg/models"
+	"github.com/meloie/gonebook/internal/validation"
+	"github.com/meloie/gonebook/pkg/models"
 	"net/http"
 
 	"github.com/go-chi/render"

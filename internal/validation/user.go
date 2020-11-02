@@ -5,8 +5,8 @@ import (
 
 	"github.com/rs/zerolog/log"
 
-	"gonebook/internal/ent"
-	"gonebook/internal/ent/user"
+	"github.com/meloie/gonebook/internal/ent"
+	"github.com/meloie/gonebook/internal/ent/user"
 )
 
 func CheckUserUsernameDuplication(ctx context.Context, db *ent.Client, username string) bool {

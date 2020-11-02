@@ -5,7 +5,7 @@ package hook
 import (
 	"context"
 	"fmt"
-	"gonebook/internal/ent"
+	"github.com/meloie/gonebook/internal/ent"
 )
 
 // The ContactFunc type is an adapter to allow the use of ordinary

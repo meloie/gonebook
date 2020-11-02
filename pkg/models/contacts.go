@@ -6,8 +6,8 @@ import (
 
 	"github.com/go-chi/render"
 
-	"gonebook/internal/ent"
-	"gonebook/internal/validation"
+	"github.com/meloie/gonebook/internal/ent"
+	"github.com/meloie/gonebook/internal/validation"
 )
 
 type ContactPayload struct {
